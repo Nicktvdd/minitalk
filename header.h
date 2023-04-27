@@ -5,5 +5,5 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <stdio.h> //remove this after changing printf
+#include "./libft/libft.h"
 #endif
