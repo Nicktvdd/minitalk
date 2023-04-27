@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nick <nick@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nvan-den <nvan-den@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:18:28 by nick              #+#    #+#             */
-/*   Updated: 2023/04/20 13:33:12 by nick             ###   ########.fr       */
+/*   Updated: 2023/04/27 14:23:58 by nvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ int	main(int argc, char **argv)
 	char character;
 
 	i = 0;
+	if (argc != 2)
+		exit(0);
 	pid = atoi(argv[1]);
 
-/* 	struct sigaction sigact;
+ 	struct sigaction sigact;
 	sigemptyset(&sigact.sa_mask);
 	sigact.sa_handler = sig_handler;
 	sigaction(SIGUSR1, &sigact, NULL);
- */
+
 	while (argv[2][i])
 	{
 		character = argv[2][i];
