@@ -6,17 +6,16 @@
 /*   By: nvan-den <nvan-den@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:18:42 by nick              #+#    #+#             */
-/*   Updated: 2023/04/27 16:08:33 by nvan-den         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:08:09 by nvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./header.h"
 
-static unsigned char	character = 0;
-
-void handle_sign(int sig)
+void sig_handler(int sig)
 {
-	static int	bit_pos = 0;
+	static int	bit_pos;
+	static char	character;
 
 	if (sig == SIGUSR1)
 	{
@@ -45,13 +44,14 @@ int	main(void)
 	pid = getpid();
 	ft_printf("server id: %i\n", pid);
 
-	struct	sigaction sa;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = &handle_sign;
-	sa.sa_flags = SA_SIGINFO;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	struct	sigaction sigact;
+	sigemptyset(&sigact.sa_mask);
+	sigact.sa_handler = &sig_handler;
+	sigact.sa_flags = SA_SIGINFO;
+	sigaction(SIGUSR1, &sigact, NULL);
+	sigaction(SIGUSR2, &sigact, NULL);
 
-	pause();
+	while(1)
+		pause();
 	return(0);
 }
