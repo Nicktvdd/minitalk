@@ -6,7 +6,7 @@
 /*   By: nvan-den <nvan-den@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:18:28 by nick              #+#    #+#             */
-/*   Updated: 2023/04/28 11:20:46 by nvan-den         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:13:38 by nvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ int	main(int argc, char **argv)
 	}
 	pid = ft_atoi(argv[1]);
 	string = argv[2];
+	string[ft_strlen(string) + 1] = '\0';
 
  	struct sigaction sigact;
 	sigemptyset(&sigact.sa_mask);
 	sigact.sa_handler = sig_handler;
 	sigaction(SIGUSR1, &sigact, NULL);
-
+	
 	while (string[i])
 	{
 		character = string[i];
