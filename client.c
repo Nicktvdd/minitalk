@@ -6,7 +6,7 @@
 /*   By: nvan-den <nvan-den@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:18:28 by nick              #+#    #+#             */
-/*   Updated: 2023/04/28 15:51:28 by nvan-den         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:11:17 by nvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,17 @@ int	main(int argc, char **argv)
 		bit_pos = 0;
 		i++;
 	}
+ 	character = string[i];
+	while (bit_pos < 8)
+	{
+		if (character & (1 << bit_pos))
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		usleep(100);
+		bit_pos++;
+	}
+	bit_pos = 0;
+	i++; 
 	return(0);
 }

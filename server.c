@@ -6,7 +6,7 @@
 /*   By: nvan-den <nvan-den@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:18:42 by nick              #+#    #+#             */
-/*   Updated: 2023/04/28 16:01:19 by nvan-den         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:11:58 by nvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,11 @@ void sig_handler(int sig, siginfo_t *siginfo, void *empty)
 	if (bit_pos == 8)
 	{
 		string[i] = character;
-		ft_printf("%s\n", string);
 		if (character == '\0')
 		{
-			ft_printf("hi");
+			ft_printf("%s\n", string);
 			kill(siginfo->si_pid, SIGUSR1);
 			i = 0;
-			free(string);
 		}
 		character = 0;
 		bit_pos = 0;
