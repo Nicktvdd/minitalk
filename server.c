@@ -6,24 +6,22 @@
 /*   By: nvan-den <nvan-den@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:18:42 by nick              #+#    #+#             */
-/*   Updated: 2023/04/28 14:20:15 by nvan-den         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:01:19 by nvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./header.h"
 
-static char	*string;
-
-void sig_handler(int sig)
+void sig_handler(int sig, siginfo_t *siginfo, void *empty)
 {
 	static int	bit_pos;
 	static char	character;
 	static int	i;
+	static char	*string;
 
-	if (string == NULL)
+	if (string == NULL && (empty || !empty))
 	{
-		string = malloc(sizeof(char) * 100);
-		ft_memset(string, 0, sizeof(char) * 100);
+		string = malloc(sizeof(char) * 1000);
 	}
 	if (sig == SIGUSR1)
 	{
@@ -37,16 +35,19 @@ void sig_handler(int sig)
 	if (bit_pos == 8)
 	{
 		string[i] = character;
+		ft_printf("%s\n", string);
+		if (character == '\0')
+		{
+			ft_printf("hi");
+			kill(siginfo->si_pid, SIGUSR1);
+			i = 0;
+			free(string);
+		}
 		character = 0;
 		bit_pos = 0;
 		i++;
 	}
-	if (string[i] == '\0')
-	{
-		ft_printf("%s", string);
-		ft_memset(string, 0, sizeof(char) * 100);
-		i = 0;
-	}
+
 }
 
 int	main(void)
@@ -58,7 +59,7 @@ int	main(void)
 
 	struct	sigaction sigact;
 	sigemptyset(&sigact.sa_mask);
-	sigact.sa_handler = &sig_handler;
+	sigact.sa_sigaction = &sig_handler;
 	sigact.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sigact, NULL);
 	sigaction(SIGUSR2, &sigact, NULL);
