@@ -6,7 +6,7 @@
 /*   By: nvan-den <nvan-den@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:18:28 by nick              #+#    #+#             */
-/*   Updated: 2023/05/02 14:11:12 by nvan-den         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:19:34 by nvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	signal_sender(char *string, int pid, int i)
 {
 	int		bit_pos;
 	char	character;
-	
+
 	bit_pos = 0;
 	character = string[i];
 	while (bit_pos < 8)
@@ -33,24 +33,23 @@ int	signal_sender(char *string, int pid, int i)
 	return (i);
 }
 
-void sig_handler(int sig) 
+void	sig_handler(int sig)
 {
-    if (sig == SIGUSR1) 
-        ft_printf("String received by server!\n");
+	if (sig == SIGUSR1)
+		ft_printf("String received by server!\n");
 }
 
 int	main(int argc, char **argv)
 {
-	int		i;
-	int		pid;
-	char	*string;
-	
+	int					i;
+	int					pid;
+	char				*string;
+	struct sigaction	sigact;
+
 	i = 0;
 	pid = ft_atoi(argv[1]);
 	string = argv[2];
 	string[ft_strlen(string)] = '\0';
-
- 	struct sigaction sigact;
 	sigemptyset(&sigact.sa_mask);
 	sigact.sa_handler = sig_handler;
 	sigaction(SIGUSR1, &sigact, NULL);
@@ -58,5 +57,5 @@ int	main(int argc, char **argv)
 	while (string[i] && (argc))
 		i = signal_sender(string, pid, i);
 	signal_sender(string, pid, i);
-	return(0);
+	return (0);
 }
