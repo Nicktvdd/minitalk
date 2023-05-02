@@ -6,7 +6,7 @@
 /*   By: nvan-den <nvan-den@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:18:28 by nick              #+#    #+#             */
-/*   Updated: 2023/05/02 14:19:34 by nvan-den         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:29:15 by nvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	main(int argc, char **argv)
 	sigemptyset(&sigact.sa_mask);
 	sigact.sa_handler = sig_handler;
 	sigaction(SIGUSR1, &sigact, NULL);
-	sigaction(SIGUSR2, &sigact, NULL);
 	while (string[i] && (argc))
 		i = signal_sender(string, pid, i);
 	signal_sender(string, pid, i);

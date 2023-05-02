@@ -6,7 +6,7 @@
 /*   By: nvan-den <nvan-den@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:18:42 by nick              #+#    #+#             */
-/*   Updated: 2023/05/02 12:45:13 by nvan-den         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:29:09 by nvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ void	sig_handler(int sig, siginfo_t *siginfo, void *empty)
 	static char	*string;
 
 	if (string == NULL && (empty || !empty))
-	{
 		string = malloc(sizeof(char) * 1000);
-	}
 	if (sig == SIGUSR1)
 	{
 		character |= (1 << bit_pos);
