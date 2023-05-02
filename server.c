@@ -6,7 +6,7 @@
 /*   By: nvan-den <nvan-den@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:18:42 by nick              #+#    #+#             */
-/*   Updated: 2023/05/02 11:38:22 by nvan-den         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:45:13 by nvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 int	print_signal(char *string, siginfo_t *siginfo, int i)
 {
-		if (string[i] == '\0')
-		{
-			ft_printf("%s\n", string);
-			kill(siginfo->si_pid, SIGUSR1);
-			i = 0;
-		}
-		else 
-			i++;
-		return(i);
+	if (string[i] == '\0')
+	{
+		ft_printf("%s\n", string);
+		kill(siginfo->si_pid, SIGUSR1);
+		i = 0;
+	}
+	else
+		i++;
+	return (i);
 }
 
-void sig_handler(int sig, siginfo_t *siginfo, void *empty)
+void	sig_handler(int sig, siginfo_t *siginfo, void *empty)
 {
 	static int	bit_pos;
 	static char	character;
 	static int	i;
 	static char	*string;
-	
+
 	if (string == NULL && (empty || !empty))
 	{
 		string = malloc(sizeof(char) * 1000);
@@ -44,7 +44,7 @@ void sig_handler(int sig, siginfo_t *siginfo, void *empty)
 	else if (sig == SIGUSR2)
 		bit_pos++;
 	else
-		return;
+		return ;
 	if (bit_pos == 8)
 	{
 		string[i] = character;
@@ -52,24 +52,21 @@ void sig_handler(int sig, siginfo_t *siginfo, void *empty)
 		character = 0;
 		bit_pos = 0;
 	}
-
 }
 
 int	main(void)
 {
-	int pid;
-	
+	int					pid;
+	struct sigaction	sigact;
+
 	pid = getpid();
 	ft_printf("server id: %i\n", pid);
-
-	struct	sigaction sigact;
 	sigemptyset(&sigact.sa_mask);
 	sigact.sa_sigaction = &sig_handler;
 	sigact.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sigact, NULL);
 	sigaction(SIGUSR2, &sigact, NULL);
-	
-	while(1)
+	while (1)
 		pause();
-	return(0);
+	return (0);
 }
