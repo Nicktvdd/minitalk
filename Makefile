@@ -12,15 +12,19 @@ LIBFT_NAME = libft.a
 LIBFT = $(LIBFT_DIR)$(LIBFT_NAME)
 
 CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = 
+
+BONUS_CLIENT = $(SRCS_CLIENT:%.c=%_bonus.c)
+BONUS_SERVER = $(SRCS_SERVER:%.c=%_bonus.c)
+BONUS_OBJS_CLIENT = $(BONUS_CLIENT:%.c=%.o)
+BONUS_OBJS_SERVER = $(BONUS_SERVER:%.c=%.o)
 
 all: $(NAME_CLIENT) $(NAME_SERVER)
 
 $(NAME_CLIENT): $(OBJS_CLIENT) $(LIBFT)
-	cc $(CFLAGS) $(LDFLAGS) $(OBJS_CLIENT) -L$(LIBFT_DIR) -lft -o $(NAME_CLIENT)
+	cc $(CFLAGS) $(OBJS_CLIENT) -L$(LIBFT_DIR) -lft -o $(NAME_CLIENT)
 
 $(NAME_SERVER): $(OBJS_SERVER) $(LIBFT)
-	cc $(CFLAGS) $(LDFLAGS) $(OBJS_SERVER) -L$(LIBFT_DIR) -lft -o $(NAME_SERVER)
+	cc $(CFLAGS) $(OBJS_SERVER) -L$(LIBFT_DIR) -lft -o $(NAME_SERVER)
 
 %.o: %.c $(LIBFT)
 	cc $(CFLAGS) -c $< -o $@
@@ -40,3 +44,17 @@ fclean: clean
 	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
+
+bonus: $(NAME_CLIENT) $(NAME_SERVER)
+
+$(BONUS_CLIENT): $(BONUS_OBJS_CLIENT) $(LIBFT)
+	cc $(CFLAGS) $(BONUS_OBJS_CLIENT) -L$(LIBFT_DIR) -lft -o $(NAME_CLIENT)
+
+$(BONUS_SERVER): $(BONUS_OBJS_SERVER) $(LIBFT)
+	cc $(CFLAGS) $(BONUS_OBJS_SERVER) -L$(LIBFT_DIR) -lft -o $(NAME_SERVER)
+
+$(BONUS_OBJS_CLIENT): $(BONUS_CLIENT)
+	cc $(CFLAGS) -c $< -o $@
+
+$(BONUS_OBJS_SERVER): $(BONUS_SERVER)
+	cc $(CFLAGS) -c $< -o $@
