@@ -33,13 +33,12 @@ $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 clean:
-	rm -f $(OBJS_CLIENT)
-	rm -f $(OBJS_SERVER)
+	rm -f $(OBJS_CLIENT) $(OBJS_SERVER)
+	rm -f $(BONUS_OBJS_CLIENT) $(BONUS_OBJS_SERVER)
 	make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm -f $(NAME_CLIENT)
-	rm -f $(NAME_SERVER)
+	rm -f $(NAME_CLIENT) $(NAME_SERVER)
 	rm -f $(LIBFT)
 	make -C $(LIBFT_DIR) fclean
 
